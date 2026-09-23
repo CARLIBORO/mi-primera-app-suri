@@ -3,111 +3,318 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CYBERPHONE TALLER DE CELULARES</title>
-    <!-- Google Fonts & Tailwind CSS para un diseño moderno y rápido -->
+    <title>Reparación de Celulares y Móviles | Servicio Técnico Profesional</title>
+    <!-- Tailwind CSS para un diseño moderno y responsivo -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400,600,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body { font-family: 'Inter', sans-serif; }
+        .modal {
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
     </style>
 </head>
-<body class="bg-gray-900 text-gray-100 flex flex-col min-h-screen">
+<body class="bg-gray-900 text-gray-100 font-sans antialiased selection:bg-blue-500 selection:text-white">
 
     <!-- HEADER / NAVEGACIÓN -->
-    <header class="bg-gray-800 shadow-md sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            
-            <!-- ESPACIO PARA EL LOGOTIPO EN PNG -->
-            <div class="flex items-center space-x-3">
-                <!-- Reemplaza 'logo.png' con la ruta o nombre de tu archivo PNG -->
-                <a href="#" class="flex items-center gap-3">
-                    <img src="logo.png" alt="CYBERPHONE Logo" class="h-12 w-auto object-contain">
-                    <!-- Texto de respaldo o alternativo si prefieres ocultar el texto cuando cargue el logo -->
-                    <span class="text-xl font-bold tracking-wider text-cyan-400">CYBERPHONE</span>
-                </a>
-            </div>
+    <header class="bg-gray-800 border-b border-gray-700 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- LOGO MÁS GRANDE -->
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="showScreen('home')">
+                    <div class="bg-blue-600 p-3 rounded-xl flex items-center justify-center text-white shadow-lg">
+                        <i class="fa-solid fa-mobile-screen-button text-3xl"></i>
+                    </div>
+                    <div>
+                        <span class="text-2xl font-black tracking-wider bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent">MÓVIL-FIX</span>
+                        <span class="block text-xs text-gray-400 font-medium">Servicio Técnico Profesional</span>
+                    </div>
+                </div>
 
-            <!-- Menú de Navegación -->
-            <nav class="hidden md:flex space-x-6 text-sm font-semibold">
-                <a href="#servicios" class="hover:text-cyan-400 transition">Servicios</a>
-                <a href="#nosotros" class="hover:text-cyan-400 transition">Nosotros</a>
-                <a href="#contacto" class="hover:text-cyan-400 transition">Contacto</a>
-            </nav>
+                <!-- Menú Escritorio -->
+                <nav class="hidden md:flex items-center space-x-8">
+                    <button onclick="showScreen('home')" class="text-gray-300 hover:text-blue-400 font-medium transition">Inicio</button>
+                    <button onclick="showScreen('models')" class="text-gray-300 hover:text-blue-400 font-medium transition">Modelos y Precios</button>
+                    <button onclick="showScreen('tracking')" class="text-gray-300 hover:text-blue-400 font-medium transition">Estado de Reparación</button>
+                    <button onclick="showScreen('policies')" class="text-gray-300 hover:text-blue-400 font-medium transition">Políticas y Términos</button>
+                </nav>
+
+                <!-- Botón Menú Móvil -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-gray-300 hover:text-white focus:outline-none p-2">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Menú Desplegable Móvil -->
+        <div id="mobile-menu" class="hidden md:hidden bg-gray-800 border-b border-gray-700 px-4 pt-2 pb-4 space-y-2">
+            <button onclick="showScreen('home'); toggleMobileMenu();" class="block w-text-left py-2 text-gray-300 hover:text-blue-400">Inicio</button>
+            <button onclick="showScreen('models'); toggleMobileMenu();" class="block w-text-left py-2 text-gray-300 hover:text-blue-400">Modelos y Precios</button>
+            <button onclick="showScreen('tracking'); toggleMobileMenu();" class="block w-text-left py-2 text-gray-300 hover:text-blue-400">Estado de Reparación</button>
+            <button onclick="showScreen('policies'); toggleMobileMenu();" class="block w-text-left py-2 text-gray-300 hover:text-blue-400">Políticas y Términos</button>
         </div>
     </header>
 
-    <!-- SECCIÓN HERO -->
-    <section class="bg-gradient-to-r from-gray-900 via-gray-800 to-cyan-950 py-20 px-4 text-center">
-        <div class="max-w-4xl mx-auto">
-            <h1 class="text-4xl sm:text-6xl font-extrabold text-white mb-6">
-                CYBERPHONE <span class="text-cyan-400">TALLER DE CELULARES</span>
-            </h1>
-            <p class="text-lg sm:text-xl text-gray-300 mb-8">
-                Expertos en reparación, software y solución de problemas para tu smartphone. ¡Devuélvele la vida a tu dispositivo con rapidez y garantía!
-            </p>
-            <a href="#contacto" class="bg-cyan-500 hover:bg-cyan-400 text-gray-950 font-bold px-8 py-3 rounded-lg shadow-lg transition duration-300">
-                Cotiza tu Reparación
-            </a>
-        </div>
-    </section>
+    <!-- CONTENEDOR PRINCIPAL DE PANTALLAS -->
+    <main class="min-h-screen pb-16">
 
-    <!-- SECCIÓN DE SERVICIOS -->
-    <section id="servicios" class="py-16 px-4 max-w-7xl mx-auto flex-grow">
-        <div class="text-center mb-12">
-            <h2 class="text-3xl font-bold text-white mb-2">Nuestros Servicios</h2>
-            <p class="text-gray-400">Soluciones profesionales adaptadas a tus necesidades tecnológicas.</p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <!-- Servicio 1 -->
-            <div class="bg-gray-800 p-6 rounded-xl border border-gray-700 shadow hover:border-cyan-500 transition">
-                <div class="text-cyan-400 text-4xl mb-4">📱</div>
-                <h3 class="text-xl font-bold text-white mb-2">Cambio de Pantallas</h3>
-                <p class="text-gray-400 text-sm">
-                    Reemplazo de pantallas rotas, táctiles dañados o displays sin imagen con refacciones de alta calidad.
-                </p>
-            </div>
-            <!-- Servicio 2 -->
-            <div class="bg-gray-800 p-6 rounded-xl border border-gray-700 shadow hover:border-cyan-500 transition">
-                <div class="text-cyan-400 text-4xl mb-4">⚙️</div>
-                <h3 class="text-xl font-bold text-white mb-2">Software y Desbloqueos</h3>
-                <p class="text-gray-400 text-sm">
-                    Instalación de software, flasheo, recuperación de sistemas operativos y solución de fallas lógicas.
-                </p>
-            </div>
-            <!-- Servicio 3 -->
-            <div class="bg-gray-800 p-6 rounded-xl border border-gray-700 shadow hover:border-cyan-500 transition">
-                <div class="text-cyan-400 text-4xl mb-4">🔋</div>
-                <h3 class="text-xl font-bold text-white mb-2">Cambio de Baterías y Accesorios</h3>
-                <p class="text-gray-400 text-sm">
-                    Optimiza la autonomía de tu equipo y adquiere cargadores, adaptadores y complementos ideales.
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <!-- SECCIÓN DE CONTACTO -->
-    <section id="contacto" class="bg-gray-800 py-16 px-4 border-t border-gray-700">
-        <div class="max-w-3xl mx-auto text-center">
-            <h2 class="text-3xl font-bold text-white mb-4">¿Listo para reparar tu celular?</h2>
-            <p class="text-gray-300 mb-8">Visítanos en nuestro taller o comunícate con nosotros para recibir asesoría inmediata.</p>
-            <div class="flex flex-col sm:flex-row justify-center gap-4 text-gray-300">
-                <div class="bg-gray-900 px-6 py-4 rounded-lg border border-gray-700">
-                    <span class="block text-cyan-400 font-bold mb-1">📍 Ubicación</span>
-                    <span>Taller especializado en celulares</span>
+        <!-- ================= PANTALLA: INICIO ================= -->
+        <section id="screen-home" class="screen max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <span class="bg-blue-900 text-blue-300 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">Garantía y Confianza</span>
+                    <h1 class="text-4xl sm:text-5xl font-extrabold text-white mt-4 leading-tight">Reparamos tu smartphone al mejor precio y tiempo récord</h1>
+                    <p class="text-gray-400 mt-4 text-lg">Especialistas en pantallas rotas, baterías agotadas, daños por humedad y software. Trabajamos con modelos desde 2019 en adelante de todas las marcas principales.</p>
+                    <div class="mt-8 flex flex-wrap gap-4">
+                        <button onclick="showScreen('models')" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 py-3 rounded-xl shadow-lg transition flex items-center gap-2">
+                            <i class="fa-solid fa-list"></i> Ver Modelos y Precios
+                        </button>
+                        <button onclick="showScreen('tracking')" class="bg-gray-800 hover:bg-gray-700 text-gray-200 border border-gray-700 font-bold px-6 py-3 rounded-xl transition flex items-center gap-2">
+                            <i class="fa-solid fa-magnifying-glass"></i> Consultar Orden
+                        </button>
+                    </div>
                 </div>
-                <div class="bg-gray-900 px-6 py-4 rounded-lg border border-gray-700">
-                    <span class="block text-cyan-400 font-bold mb-1">📞 Teléfono / WhatsApp</span>
-                    <span>+52 (6421084681)</span>
+                <div class="bg-gray-800 p-8 rounded-3xl border border-gray-700 shadow-2xl relative">
+                    <div class="absolute -top-3 -right-3 bg-indigo-600 text-white text-xs font-bold px-3 py-1 rounded-lg">¡Servicio Rápido!</div>
+                    <h3 class="text-xl font-bold text-white mb-4">¿Por qué elegirnos?</h3>
+                    <ul class="space-y-4 text-gray-300">
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-circle-check text-blue-500 mt-1"></i>
+                            <span>Refacciones de alta calidad y pruebas rigurosas antes de entregarte el equipo.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-circle-check text-blue-500 mt-1"></i>
+                            <span>Presupuestos transparentes sin cargos ocultos ni sorpresas de última hora.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-circle-check text-blue-500 mt-1"></i>
+                            <span>Garantía por escrito en todas nuestras reparaciones y refacciones instaladas.</span>
+                        </li>
+                    </ul>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+
+        <!-- ================= PANTALLA: MODELOS (CATÁLOGO DESDE 2019) ================= -->
+        <section id="screen-models" class="screen hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10">
+            <div class="text-center max-w-3xl mx-auto mb-10">
+                <h2 class="text-3xl font-extrabold text-white">Modelos con los que Trabajamos (2019 - Presente)</h2>
+                <p class="text-gray-400 mt-2">Selecciona una marca para ver las series de modelos disponibles, estimaciones de precios y tiempos de entrega estimados.</p>
+                
+                <!-- Pestañas de Marcas -->
+                <div class="flex flex-wrap justify-center gap-3 mt-6">
+                    <button onclick="filterBrand('apple')" class="brand-tab bg-blue-600 text-white px-5 py-2 rounded-lg font-semibold transition">Apple (iPhone)</button>
+                    <button onclick="filterBrand('samsung')" class="brand-tab bg-gray-800 text-gray-300 hover:bg-gray-700 px-5 py-2 rounded-lg font-semibold transition">Samsung</button>
+                    <button onclick="filterBrand('motorola')" class="brand-tab bg-gray-800 text-gray-300 hover:bg-gray-700 px-5 py-2 rounded-lg font-semibold transition">Motorola</button>
+                    <button onclick="filterBrand('xiaomi')" class="brand-tab bg-gray-800 text-gray-300 hover:bg-gray-700 px-5 py-2 rounded-lg font-semibold transition">Xiaomi / Redmi</button>
+                </div>
+            </div>
+
+            <!-- Contenedor de Listas de Modelos -->
+            <div id="models-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Se llena dinámicamente con JavaScript -->
+            </div>
+        </section>
+
+        <!-- ================= PANTALLA: SEGUIMIENTO ================= -->
+        <section id="screen-tracking" class="screen hidden max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 pt-10">
+            <div class="bg-gray-800 border border-gray-700 p-8 rounded-2xl shadow-xl">
+                <h2 class="text-2xl font-bold text-white mb-2">Consulta el Estado de tu Reparación</h2>
+                <p class="text-gray-400 text-sm mb-6">Ingresa el folio o número de orden entregado al dejar tu dispositivo.</p>
+                <div class="flex gap-4">
+                    <input type="text" id="order-input" placeholder="Ej. MOVIL-1042" class="flex-1 bg-gray-900 border border-gray-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500">
+                    <button onclick="checkOrder()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 py-3 rounded-xl transition">Buscar</button>
+                </div>
+                <div id="order-result" class="mt-6 hidden p-4 rounded-xl bg-gray-900 border border-gray-700">
+                    <!-- Resultado dinámico -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= PANTALLA: POLÍTICAS Y TÉRMINOS ================= -->
+        <section id="screen-policies" class="screen hidden max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-10">
+            <div class="bg-gray-800 border border-gray-700 p-8 sm:p-10 rounded-2xl shadow-xl space-y-6">
+                <div class="border-b border-gray-700 pb-4">
+                    <h2 class="text-3xl font-extrabold text-white">Políticas de Privacidad y Términos de Servicio</h2>
+                    <p class="text-gray-400 text-sm mt-1">Última actualización: Septiembre de 2026</p>
+                </div>
+
+                <div class="space-y-4 text-gray-300 text-sm leading-relaxed">
+                    <h3 class="text-lg font-bold text-white">1. Protección de Datos Personales (Privacidad)</h3>
+                    <p>En cumplimiento con las leyes de protección de datos aplicables, le informamos que los datos personales recabados al momento de ingresar su equipo a servicio técnico (tales como nombre, teléfono, correo electrónico y datos de contacto de emergencia) serán utilizados estrictamente con la finalidad de gestionar la orden de reparación, notificarle sobre el estatus del equipo y validar las garantías correspondientes. Sus datos no serán vendidos, comercializados ni compartidos con terceros ajenos a la operación del establecimiento sin su consentimiento expreso, salvo requerimiento legal de autoridad competente.</p>
+
+                    <h3 class="text-lg font-bold text-white">2. Diagnósticos, Presupuestos y Aceptación</h3>
+                    <p>Todo equipo ingresado está sujeto a un diagnóstico preliminar técnico. Los presupuestos proporcionados antes de la reparación tienen una vigencia limitada de 15 días naturales. Si el cliente decide no autorizar la reparación tras el diagnóstico, el equipo se devolverá en las condiciones en las que fue entregado a nuestro área de recepción, sin que esto genere un cargo por revisión ordinaria (a menos que se trate de equipos con manipulación previa severa o daños por líquidos que requieran procesos especiales de destape avanzado).</p>
+
+                    <h3 class="text-lg font-bold text-white">3. Equipos con Daños por Líquidos o Manipulación Previa</h3>
+                    <p>Los dispositivos que hayan sufrido exposición a líquidos o humedad, así como aquellos intervenidos previamente por terceros o talleres no autorizados, presentan fallas latentes impredecibles. Nuestro personal técnico notificará los riesgos inherentes antes de proceder. En estos casos específicos, la garantía de reparación aplica únicamente sobre el componente directamente sustituido, eximiendo al establecimiento de fallas posteriores derivadas de la corrosión interna progresiva.</p>
+
+                    <h3 class="text-lg font-bold text-white">4. Resguardo, Retiro y Abandono de Equipos</h3>
+                    <p>El cliente cuenta con un plazo máximo de 90 días naturales contados a partir de la fecha de notificación de término de reparación para retirar su dispositivo de nuestras instalaciones. Transcurrido este plazo sin que el cliente recoja el equipo o establezca contacto para acordar su entrega, el dispositivo será considerado legalmente como **abandonado** para efectos de liberar espacio de almacenamiento y compensar costos operativos de resguardo, de conformidad con las normativas locales aplicables en materia civil y mercantil.</p>
+
+                    <h3 class="text-lg font-bold text-white">5. Garantías de Reparación</h3>
+                    <p>Nuestras reparaciones cuentan con una garantía específica estipulada en su comprobante de servicio (generalmente de 30 a 90 días naturales según el componente). La garantía cubre exclusivamente defectos de fábrica de la pieza instalada o fallas directas de mano de obra. La garantía quedará totalmente invalidada en caso de golpes posteriores, caídas, nueva exposición a líquidos, rupturas de cristal o si el equipo es manipulado por personal ajeno a nuestro taller durante el periodo vigente.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
 
     <!-- FOOTER -->
-    <footer class="bg-gray-950 text-gray-500 py-6 text-center text-sm border-t border-gray-800">
-        <p>&copy; 2026 CYBERPHONE TALLER DE CELULARES. Todos los derechos reservados.</p>
+    <footer class="bg-gray-800 border-t border-gray-700 py-8 mt-12 text-center text-sm text-gray-400">
+        <p>&copy; 2026 MÓVIL-FIX. Todos los derechos reservados. Diseñado para Azure Static Web Apps.</p>
     </footer>
 
+    <!-- MODAL DE DETALLE DE MODELO -->
+    <div id="detail-modal" class="fixed inset-0 bg-black/70 hidden flex items-center justify-center p-4 z-50 modal">
+        <div class="bg-gray-800 border border-gray-700 w-full max-w-lg p-6 rounded-2xl shadow-2xl relative">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div id="modal-content">
+                <!-- Se llena dinámicamente -->
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPT DE LÓGICA Y DATOS DESDE 2019 -->
+    <script>
+        // Base de datos de modelos desde 2019 en adelante
+        const modelsData = {
+            apple: [
+                { name: "iPhone 11 Series (2019)", models: ["iPhone 11", "iPhone 11 Pro", "iPhone 11 Pro Max"], price: "$$ Configurar Precio", time: "1 - 2 Horas", desc: "Cambio de pantalla LCD/OLED, batería, puerto de carga y cámaras." },
+                { name: "iPhone SE (2da Gen - 2020)", models: ["iPhone SE 2020"], price: "$$ Configurar Precio", time: "1 Hora", desc: "Reemplazo de batería, pantalla y cristal trasero." },                 { name: "iPhone 12 Series (2020)", models: ["iPhone 12 mini", "iPhone 12", "iPhone 12 Pro", "iPhone 12 Pro Max"], price: "$$ Configurar Precio", time: "1 - 2 Horas", desc: "Cambio de pantalla OLED original/alternativa, Face ID y flexores." },
+                { name: "iPhone 13 Series (2021)", models: ["iPhone 13 mini", "iPhone 13", "iPhone 13 Pro", "iPhone 13 Pro Max"], price: "$$ Configurar Precio", time: "1 - 2 Horas", desc: "Mantenimiento general, pantallas con transferencia de datos y baterías." },                 { name: "iPhone 14 Series (2022)", models: ["iPhone 14", "iPhone 14 Plus", "iPhone 14 Pro", "iPhone 14 Pro Max"], price: "$$ Configurar Precio", time: "2 Horas", desc: "Reparación especializada de glass, displays y cámaras traseras." },
+                { name: "iPhone 15 Series (2023)", models: ["iPhone 15", "iPhone 15 Plus", "iPhone 15 Pro", "iPhone 15 Pro Max"], price: "$$ Configurar Precio", time: "2 Horas", desc: "Puerto USB-C, pantallas, tapas traseras y baterías." },                 { name: "iPhone 16 Series (2024 - 2025)", models: ["iPhone 16", "iPhone 16 Plus", "iPhone 16 Pro", "iPhone 16 Pro Max"], price: "$$ Configurar Precio", time: "2 - 3 Horas", desc: "Soporte técnico avanzado y refacciones de última generación." }
+            ],
+            samsung: [
+                { name: "Samsung Galaxy S10 / Note 10 (2019)", models: ["Galaxy S10e", "S10", "S10+", "Note 10", "Note 10+"], price: "$$ Configurar Precio", time: "1 - 2 Horas", desc: "Pantallas AMOLED curtas, cambio de batería y centro de carga." },                 { name: "Samsung Galaxy S20 Series (2020)", models: ["Galaxy S20", "S20+", "S20 Ultra", "S20 FE"], price: "$$ Configurar Precio", time: "1 - 2 Horas", desc: "Reparación de displays, tapas de cristal y baterías originales." },
+                { name: "Samsung Galaxy S21 Series (2021)", models: ["Galaxy S21", "S21+", "S21 Ultra", "S21 FE"], price: "$$ Configurar Precio", time: "1 - 2 Horas", desc: "Cambio de módulos de pantalla completos y optimización de software." },                 { name: "Samsung Galaxy S22 Series (2022)", models: ["Galaxy S22", "S22+", "S22 Ultra"], price: "$$ Configurar Precio", time: "2 Horas", desc: "Pantallas Dynamic AMOLED, cámaras y tapas traseras." },
+                { name: "Samsung Galaxy S23 & S24 Series (2023-2024)", models: ["Galaxy S23", "S23+", "S23 Ultra", "S24", "S24+", "S24 Ultra"], price: "$$ Configurar Precio", time: "2 Horas", desc: "Diagnóstico completo, cambio de pantallas y puertos de carga tipo C." },                 { name: "Samsung Galaxy A Series (2019-2025)", models: ["Galaxy A50 / A51 / A52 / A53 / A54 / A55", "Galaxy A32 / A33 / A34 / A35"], price: "$$ Configurar Precio", time: "1 Hora", desc: "Modelos gama media económicos: pantallas, baterías y flexores." }
+            ],
+            motorola: [
+                { name: "Moto G Series (2019 - 2021)", models: ["Moto G7 / G8 / G9 Series", "Moto G10 / G20 / G30 / G50 / G100"], price: "$$ Configurar Precio", time: "1 Hora", desc: "Cambio de pantallas LCD, pines de carga y tapas traseras." },                 { name: "Moto G Series Recientes (2022 - 2025)", models: ["Moto G22 / G32 / G42 / G52 / G72", "Moto G53 / G54 / G84"], price: "$$ Configurar Precio", time: "1 Hora", desc: "Pantallas de alta tasa de refresco, baterías y cámaras." },
+                { name: "Motorola Edge Series (2020 - 2025)", models: ["Moto Edge 20 / 30 / 40 / 50 Series", "Edge Plus"], price: "$$ Configurar Precio", time: "1 - 2 Horas", desc: "Pantallas curvas OLED, baterías de alta capacidad y carcasas." }             ],             xiaomi: [                 { name: "Xiaomi Redmi Note Series (2019-2021)", models: ["Redmi Note 8 / 8 Pro", "Redmi Note 9 / 9S / 9 Pro", "Redmi Note 10 / 10 Pro"], price: "$$ Configurar Precio", time: "1 Hora", desc: "Cambio de glass, displays, baterías y solución de fallas de booteo." },
+                { name: "Xiaomi Redmi Note Series Recientes (2022-2025)", models: ["Redmi Note 11 / 11 Pro", "Redmi Note 12 / 12 Pro", "Redmi Note 13 / 13 Pro"], price: "$$ Configurar Precio", time: "1 Hora", desc: "Pantallas AMOLED, centros de carga rápida y tapas traseras." },                 { name: "Xiaomi Flagship Series (Mi / T Series)", models: ["Mi 10 / Mi 11 / 12T / 13T / 14T Series"], price: "$$ Configurar Precio", time: "1 - 2 Horas", desc: "Reparación de gama alta, cámaras principales y componentes internos." }
+            ]
+        };
+
+        // Función para cambiar de pantallas (SPA navigation)
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.add('hidden');
+            });
+            document.getElementById(`screen-${screenId}`).classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Control de menú móvil
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        function toggleMobileMenu() {
+            mobileMenu.classList.add('hidden');
+        }
+
+        // Renderizar modelos por marca
+        function filterBrand(brand) {
+            // Actualizar pestañas activas
+            document.querySelectorAll('.brand-tab').forEach(tab => {
+                tab.classList.remove('bg-blue-600', 'text-white');
+                tab.classList.add('bg-gray-800', 'text-gray-300');
+            });
+            event.target.classList.remove('bg-gray-800', 'text-gray-300');
+            event.target.classList.add('bg-blue-600', 'text-white');
+
+            const container = document.getElementById('models-container');
+            container.innerHTML = '';
+
+            const list = modelsData[brand] || [];
+            list.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = "bg-gray-800 border border-gray-700 p-6 rounded-2xl shadow-lg hover:border-blue-500 transition cursor-pointer flex flex-col justify-between";
+                card.onclick = () => openModelDetail(item);
+                card.innerHTML = `
+                    <div>
+                        <span class="text-xs font-semibold text-blue-400 uppercase tracking-wider">${brand}</span>
+                        <h3 class="text-lg font-bold text-white mt-1">${item.name}</h3>
+                        <p class="text-gray-400 text-sm mt-2">${item.desc}</p>
+                        <div class="mt-4 flex flex-wrap gap-1">
+                            ${item.models.map(m => `<span class="bg-gray-900 text-gray-300 text-xs px-2.5 py-1 rounded-md border border-gray-700">${m}</span>`).join('')}
+                        </div>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-gray-700 flex justify-between items-center">
+                        <span class="text-blue-400 font-bold text-sm">${item.price}</span>
+                        <span class="text-xs text-gray-400 flex items-center gap-1"><i class="fa-regular fa-clock"></i> ${item.time}</span>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Abrir Modal de Detalle
+        function openModelDetail(item) {
+            const modalContent = document.getElementById('modal-content');
+            modalContent.innerHTML = `
+                <h3 class="text-2xl font-bold text-white mb-2">${item.name}</h3>
+                <p class="text-gray-300 text-sm mb-4">${item.desc}</p>
+                <div class="bg-gray-900 p-4 rounded-xl border border-gray-700 space-y-3 mb-6">
+                    <div class="flex justify-between">
+                        <span class="text-gray-400">Modelos incluidos:</span>
+                        <span class="text-white font-medium text-right">${item.models.join(', ')}</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-400">Precio Estimado:</span>
+                        <span class="text-blue-400 font-bold">${item.price}</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-400">Tiempo de reparación:</span>
+                        <span class="text-green-400 font-medium">${item.time}</span>
+                    </div>
+                </div>
+                <div class="flex justify-end gap-3">
+                    <button onclick="closeModal()" class="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-xl text-sm font-medium transition">Cerrar</button>
+                    <button onclick="alert('Por favor, acude a sucursal o contáctanos para agendar tu cita.'); closeModal();" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl text-sm font-bold transition">Cotizar / Agendar</button>
+                </div>
+            `;
+            document.getElementById('detail-modal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('detail-modal').classList.add('hidden');
+        }
+
+        // Simulador de consulta de órdenes
+        function checkOrder() {
+            const input = document.getElementById('order-input').value.trim();
+            const resultBox = document.getElementById('order-result');
+            
+            if(!input) {
+                alert('Por favor ingresa un número de orden válido.');
+                return;
+            }
+
+            resultBox.classList.remove('hidden');
+            resultBox.innerHTML = `
+                <div class="flex items-center gap-3">
+                    <div class="bg-blue-600/20 text-blue-400 p-3 rounded-xl"><i class="fa-solid fa-spinner fa-spin text-xl"></i></div>
+                    <div>
+                        <h4 class="text-white font-bold">Orden: ${input.toUpperCase()}</h4>
+                        <p class="text-gray-400 text-sm mt-1">Estado actual: <span class="text-yellow-400 font-semibold">En proceso de diagnóstico y prueba técnica</span></p>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Cargar Apple por defecto al iniciar
+        window.onload = () => {
+            filterBrand('apple');
+        };
+    </script>
 </body>
 </html>
